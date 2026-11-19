@@ -1,7 +1,7 @@
 import type { Performance } from '../../core/types';
 import { DAYS_OF_WEEK, getMonthFromArray, groupByDate, formatTime } from './calendar-utils';
 
-export default function PerformanceCalendar({ performances, year, month }: { performances: Performance[]; year: number; month: number }) {
+export default function PerformanceCalendar({ performances, year, month, displayAvailability }: { performances: Performance[]; year: number; month: number; displayAvailability: boolean }) {
 
     // Calculate the first day of the month and the number of days in the month to create a grid for the calendar. 
     const firstDayIndex = new Date(year, month - 1, 1).getDay()  // month - 1: JS months are 0-based
@@ -35,7 +35,7 @@ export default function PerformanceCalendar({ performances, year, month }: { per
                                 <span className="font-alt text-2xl">{day}</span>
                                 {shows.map(p => (
                                     <a key={p.id} href={p.bookingUrl} className="flex items-center gap-2 font-body hover:bg-black hover:text-white transition-colors rounded p-1">
-                                        <div className={`size-4 rounded-full show-${p.status}`} />
+                                        {displayAvailability && (<div className={`size-4 rounded-full show-${p.status}`} />)}
                                         {formatTime(p.startsAt, p.timezone)}
                                     </a>
                                 ))}
@@ -43,17 +43,19 @@ export default function PerformanceCalendar({ performances, year, month }: { per
                         )
                     })}
                 </div>
-                <div className="flex gap-5 mt-6">
-                    <div className="flex items-center gap-2">
-                        <div className="size-4 rounded-full show-available" /><span className="font-body">Available</span>
+                {displayAvailability && (
+                    <div className="flex gap-5 mt-6">
+                        <div className="flex items-center gap-2">
+                            <div className="size-4 rounded-full show-available" /><span className="font-body">Available</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="size-4 rounded-full show-limited" /><span className="font-body">Limited</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="size-4 rounded-full show-sold_out" /><span className="font-body">Sold Out</span>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="size-4 rounded-full show-limited" /><span className="font-body">Limited</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="size-4 rounded-full show-sold_out" /><span className="font-body">Sold Out</span>
-                    </div>
-                </div>
+                )}
             </div>
 
 

@@ -10,7 +10,7 @@ function App() {
   if (error) return <p>Couldn't load performances.</p>
 
   return (
-    <PerformanceCalendar performances={performances} year={2026} month={11} />
+    <PerformanceCalendar performances={performances} year={2026} month={11} displayAvailability={true} />
   )
 }
 
