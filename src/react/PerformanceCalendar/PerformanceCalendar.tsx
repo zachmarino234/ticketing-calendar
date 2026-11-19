@@ -15,8 +15,8 @@ export default function PerformanceCalendar({ performances, year, month, display
     const byDate = groupByDate(performances)
 
     return (
-        <div className="flex items-start gap-5">
-            <h4 className="font-display text-xl [writing-mode:sideways-lr]">{getMonthFromArray(month)?.toUpperCase()}</h4>
+        <div className="flex flex-col items-start gap-5">
+            <h4 className="font-display text-4xl">{getMonthFromArray(month)?.toUpperCase()}</h4>
             <div className="border bg-white border-gray-300 rounded p-6">
                 <div className="grid grid-cols-7 gap-3">
                     {DAYS_OF_WEEK.map((day) => (
