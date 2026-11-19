@@ -1,11 +1,13 @@
-import raw from '../../fixtures/tt-events.json'
-import { toPerformances } from '../adapters/tickettailor/transform'
-import type { TicketTailorEvent, TicketTailorList } from '../adapters/tickettailor/raw-types'
 import PerformanceCalendar from '../react/PerformanceCalendar/PerformanceCalendar'
+import { usePerformances } from '../react/usePerformances'
 
-const performances = toPerformances(raw as TicketTailorList<TicketTailorEvent>)
 
 function App() {
+
+  const { performances, loading, error } = usePerformances();
+
+  if (loading) return <p>Loading performances…</p>
+  if (error) return <p>Couldn't load performances.</p>
 
   return (
     <PerformanceCalendar performances={performances} year={2026} month={11} />
