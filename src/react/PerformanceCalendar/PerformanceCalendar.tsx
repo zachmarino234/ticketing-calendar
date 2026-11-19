@@ -1,5 +1,5 @@
 import type { Performance } from '../../core/types';
-import { DAYS_OF_WEEK, getMonthFromArray, groupByDate, formatTime } from './calendar-utils';
+import { DAYS_OF_WEEK, getMonthFromArray, groupByDate, formatTime, formatStatus } from './calendar-utils';
 
 export default function PerformanceCalendar({ performances, year, month, displayAvailability }: { performances: Performance[]; year: number; month: number; displayAvailability: boolean }) {
 
@@ -15,12 +15,12 @@ export default function PerformanceCalendar({ performances, year, month, display
     const byDate = groupByDate(performances)
 
     return (
-        <div className="flex flex-col items-start gap-5">
+        <div className="flex flex-col items-start gap-5" aria-label={`Performance calendar for ${getMonthFromArray(month)} ${year}`}>
             <h4 className="font-display text-4xl">{getMonthFromArray(month)?.toUpperCase()}</h4>
-            <div className="border bg-white border-gray-300 rounded p-6">
+            <div className="border bg-white border-gray-300 rounded p-6" aria-label='Calendar'>
                 <div className="grid grid-cols-7 gap-3">
                     {DAYS_OF_WEEK.map((day) => (
-                        <div key={day} className="font-alt text-4xl text-center">
+                        <div key={day} className="font-alt text-xl text-center" aria-label={day}>
                             {day}
                         </div>
                     ))}
@@ -34,17 +34,23 @@ export default function PerformanceCalendar({ performances, year, month, display
                             <div key={dateKey} className="flex flex-col gap-2 p-1">
                                 <span className="font-alt text-2xl">{day}</span>
                                 {shows.map(p => (
-                                    <a key={p.id} href={p.bookingUrl} className="flex items-center gap-2 font-body hover:bg-black hover:text-white transition-colors rounded p-1">
-                                        {displayAvailability && (<div className={`size-4 rounded-full show-${p.status}`} />)}
-                                        {formatTime(p.startsAt, p.timezone)}
-                                    </a>
+                                    (p.status === 'sold_out') ?
+                                        <div key={p.id} className="flex items-center gap-2 font-body rounded p-1" tabIndex={0} aria-label={`Tickets ${displayAvailability ? formatStatus(p.status) : ''} for performance on ${getMonthFromArray(month)} ${day}, ${year} at ${formatTime(p.startsAt, p.timezone)}`}>
+                                            {displayAvailability && (<div className={`size-4 rounded-full show-${p.status}`} />)}
+                                            {formatTime(p.startsAt, p.timezone)}
+                                        </div>
+                                        :
+                                        <a key={p.id} href={p.bookingUrl} className="flex items-center gap-2 font-body hover:bg-black hover:text-white transition-colors rounded p-1" aria-label={`Tickets ${displayAvailability ? formatStatus(p.status) : ''} for performance on ${getMonthFromArray(month)} ${day}, ${year} at ${formatTime(p.startsAt, p.timezone)}`}>
+                                            {displayAvailability && (<div className={`size-4 rounded-full show-${p.status}`} />)}
+                                            {formatTime(p.startsAt, p.timezone)}
+                                        </a>
                                 ))}
                             </div>
                         )
                     })}
                 </div>
                 {displayAvailability && (
-                    <div className="flex gap-5 mt-6">
+                    <div className="flex gap-5 mt-6" aria-label="Legend">
                         <div className="flex items-center gap-2">
                             <div className="size-4 rounded-full show-available" /><span className="font-body">Available</span>
                         </div>

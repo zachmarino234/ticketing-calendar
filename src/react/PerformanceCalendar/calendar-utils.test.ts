@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import raw from "../../../fixtures/tt-events.json";
 import { toPerformances } from "../../adapters/tickettailor/transform";
 import type { TicketTailorList, TicketTailorEvent } from "../../adapters/tickettailor/raw-types";
-import { formatTime, getMonthFromArray, groupByDate } from "./calendar-utils";
+import { formatStatus, formatTime, getMonthFromArray, groupByDate } from "./calendar-utils";
 
 const fixture = raw as TicketTailorList<TicketTailorEvent>;
 
@@ -63,5 +63,20 @@ describe("formatTime", () => {
 
     it("should format a time with a non EST timezone", () => {
         expect(formatTime("2026-11-21T19:00:00Z", "Europe/London")).toBe("7:00 PM");
+    });
+});
+
+describe("formatStatus", () => {
+    it("should format 'sold_out' to 'sold out'", () => {
+        expect(formatStatus("sold_out")).toBe("sold out");
+    });
+
+    it("should format 'off_sale' to 'off sale'", () => {
+        expect(formatStatus("off_sale")).toBe("off sale");
+    });
+
+    it("should return the same string for other statuses", () => {
+        expect(formatStatus("available")).toBe("available");
+        expect(formatStatus("limited")).toBe("limited");
     });
 });

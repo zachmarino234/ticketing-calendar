@@ -1,6 +1,6 @@
 import type { Performance } from "../../core/types";
 
-export const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+export const DAYS_OF_WEEK = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const MONTHS = [
   "January",
   "February",
@@ -41,4 +41,15 @@ export function formatTime(iso: string, timeZone: string): string {
     minute: "2-digit",
     timeZone,
   });
+}
+
+// Helper function to format availability status for display in the UI/for screen readers.
+export function formatStatus(status: string): string {
+  switch (status) {
+    case "sold_out":
+      return "sold out";
+    case "off_sale":
+      return "off sale";
+  }
+  return status;
 }
