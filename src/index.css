@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: 'Joyride', sans-serif;
+  --font-body: 'Knockout HTF52Cruiserweight', sans-serif;
+  --font-alt: 'Knockout HTF47Bantamweight', sans-serif;
+  --color-brand: #E42A10;
+  --color-brand-alt: #ED02A3;
+
+}
+
+.show-available {
+  background-color: var(--color-green-500);
+}
+
+.show-limited {
+  background-color: var(--color-orange-500);
+}
+
+.show-sold_out {
+  background-color: var(--color-red-600);
+}
+
