@@ -1,75 +1,25 @@
-# React + TypeScript + Vite
+# Ticketing Calendar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Goal: A Typescript-based Calendar for theatrical productions that can attach to APIs from all major ticketing providers.
 
-Currently, two official plugins are available:
+Currently, this project is a proof of concept, but I plan to turn it into either a library or plugin that will be compatible with Typescript-based code platforms like Next.js. I also hope to have a headless version that can adapted as well.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Installation
 
-## React Compiler
+To install and run this project, clone the project, run ```npm install``` and ```npm run dev```. The code has a function for fetching data from TicketTailor, though I am currently using a mock endpoint for simplicity. Some platforms have difficult to access APIs since you need a show to pull from and they don't have free tiers.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Current Providers
 
-## Expanding the ESLint configuration
+| Provider | Implemented?
+| --- | --- |
+| TicketTailor | ✅ |
+| Line-Up Ticketing | Planned |
+| EventBrite | Planned |
+| AudienceView | Planned |
+| TodayTix | Planned |
+| Spektrix | Planned |
+| VenueTix | Planned |
+| Telecharge | Planned |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+### AI Use
+I built this project with assistance from Claude, as well as autofill from CoPilot. I used Claude for early research on ticketing APIs, to talk through architecture, to learn new concepts, and to help debug. Some starter code (the Vite proxy config, initial type definitions and example tests) began as AI suggestions that I adapted. I wrote the transform logic, the calendar component, its utilities and the test suite, and made the design and architecture decisions. I am using this project as an opportunity to write cool that will be useful for future projects, as well as learn and reinforce software development principles :)
