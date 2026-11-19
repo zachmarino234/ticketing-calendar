@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: 'Joyride', sans-serif;
-  --font-body: 'Knockout HTF52Cruiserweight', sans-serif;
-  --font-alt: 'Knockout HTF47Bantamweight', sans-serif;
+  --font-display: 'Garamond', serif;
+  --font-body: 'Helvetica', sans-serif;
+  --font-alt: 'Helvetica', sans-serif;
   --color-brand: #E42A10;
   --color-brand-alt: #ED02A3;
 
