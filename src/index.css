@@ -10,9 +10,30 @@ body {
   place-items: center;
 }
 
+@font-face {
+  font-family: 'Raleway';
+  src: url('./assets/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Raleway Italic';
+  src: url('./assets/fonts/Raleway-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Raleway Bold';
+  src: url('./assets/fonts/Raleway-VariableFont_wght.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 @theme {
-  --font-display: 'Garamond', serif;
-  --font-body: 'Helvetica', sans-serif;
+  --font-display: 'Raleway Bold', sans-serif;
+  --font-body: 'Raleway', sans-serif;
   --font-alt: 'Helvetica', sans-serif;
 }
 
