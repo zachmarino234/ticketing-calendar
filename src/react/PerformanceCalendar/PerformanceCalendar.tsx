@@ -1,9 +1,9 @@
 import type { Performance } from '../../core/types';
-import { DAYS_OF_WEEK, getMonthFromArray, groupByDate, formatTime, formatStatus, buildCalendar } from './calendar-utils';
+import { DAYS_OF_WEEK, getMonthFromArray, groupByDate, formatTime, formatStatus, buildCalendar, upcomingOnly } from './calendar-utils';
 
 export default function PerformanceCalendar({ performances, year, month, displayAvailability }: { performances: Performance[]; year: number; month: number; displayAvailability: boolean }) {
 
-    const weeks = buildCalendar(year, month, performances);
+    const weeks = buildCalendar(year, month, upcomingOnly(performances));
 
     return (
         <div className="flex flex-col items-start gap-5" aria-label={`Performance calendar for ${getMonthFromArray(month)} ${year}`}>

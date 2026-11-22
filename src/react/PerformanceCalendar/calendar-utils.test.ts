@@ -2,7 +2,15 @@ import { describe, it, expect } from "vitest";
 import raw from "../../../fixtures/tt-events.json";
 import { toPerformances } from "../../adapters/tickettailor/transform";
 import type { TicketTailorList, TicketTailorEvent } from "../../adapters/tickettailor/raw-types";
-import { buildCalendar, formatStatus, formatTime, getMonthFromArray, groupByDate, toWeeks } from "./calendar-utils";
+import {
+  buildCalendar,
+  formatStatus,
+  formatTime,
+  getMonthFromArray,
+  groupByDate,
+  toWeeks,
+  upcomingOnly,
+} from "./calendar-utils";
 
 const fixture = raw as TicketTailorList<TicketTailorEvent>;
 
@@ -130,10 +138,10 @@ describe("buildCalendar", () => {
     expect(calendar).toHaveLength(5);
 
     // Check that the first week has the correct number of empty cells (Sunday is the 1st)
-    expect(calendar[0].filter(cell => cell.kind === "empty")).toHaveLength(0);
+    expect(calendar[0].filter((cell) => cell.kind === "empty")).toHaveLength(0);
 
     // Check that the last week has the correct number of empty cells (November has 30 days)
-    expect(calendar[4].filter(cell => cell.kind === "empty")).toHaveLength(5);
+    expect(calendar[4].filter((cell) => cell.kind === "empty")).toHaveLength(5);
 
     // Check that performances are correctly assigned to their respective days
     const groupedPerformances = groupByDate(performances);
@@ -145,5 +153,30 @@ describe("buildCalendar", () => {
         }
       }
     }
+  });
+});
+
+describe("upcomingOnly", () => {
+  it("should filter out past performances", () => {
+    const performances = toPerformances(fixture);
+    const now = new Date("2026-11-21T18:00:00Z"); // Before the first performance
+    const upcoming = performances.filter((p) => new Date(p.startsAt) > now);
+    expect(upcomingOnly(performances, now)).toEqual(upcoming);
+  });
+
+  it("should return an empty array if all performances are in the past", () => {
+    const performances = toPerformances(fixture);
+    const now = new Date("2028-11-22T00:00:00Z"); // After all performances
+    expect(upcomingOnly(performances, now)).toEqual([]);
+  });
+
+  it("should return all performances if none are in the past", () => {
+    const performances = toPerformances(fixture);
+    const now = new Date("2025-11-20T00:00:00Z"); // Before all performances
+    expect(upcomingOnly(performances, now)).toEqual(performances);
+  });
+
+  it("should return an empty array for an empty input", () => {
+    expect(upcomingOnly([], new Date())).toEqual([]);
   });
 });

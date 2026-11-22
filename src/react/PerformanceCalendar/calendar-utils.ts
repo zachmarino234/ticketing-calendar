@@ -34,6 +34,11 @@ export function toWeeks<T>(cells: T[], filler: T): T[][] {
   return weeks
 }
 
+// Filter out any shows that have already occured based on the current DateTime
+export function upcomingOnly(performances: Performance[], now: Date = new Date()): Performance[] {
+  return performances.filter((p) => new Date(p.startsAt) > now);
+}
+
 // Build a calendar grid for a given month and year, with each cell containing the day number and any performances on that day.
 export function buildCalendar(year: number, month: number, performances: Performance[]): CalendarCell[][] {
   // 1. calculate the first weekday and the number of days in the month
